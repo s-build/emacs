@@ -1,0 +1,23 @@
+name: build
+
+on: push
+
+jobs:
+  build:
+    runs-on: macos-11.0
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          name: emacs-mirror/emacs
+          ref: emacs-27.1
+
+      - name: compile emacs
+        id: compile_emacs
+        run: |
+          ./configure \
+             --with-ns \
+             --without-dbus \
+             --with-imagemagick \
+             --disable-ns-self-contained
+
+          make
