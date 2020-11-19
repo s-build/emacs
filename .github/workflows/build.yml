@@ -6,9 +6,10 @@ jobs:
   build:
     runs-on: macos-11.0
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout emacs repo
+        uses: actions/checkout@v2
         with:
-          name: emacs-mirror/emacs
+          repository: emacs-mirror/emacs.git
           ref: emacs-27.1
 
       - name: compile emacs
