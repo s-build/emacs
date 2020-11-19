@@ -6,19 +6,15 @@ jobs:
   build:
     runs-on: macos-11.0
     steps:
-      - name: checkout emacs repo
+      - name: checkout build-emacs repo
         uses: actions/checkout@v2
         with:
-          repository: emacs-mirror/emacs.git
-          ref: emacs-27.1
+          repository: caldwell/build-emacs
 
       - name: compile emacs
         id: compile_emacs
         run: |
-          ./configure \
-             --with-ns \
-             --without-dbus \
-             --with-imagemagick \
-             --disable-ns-self-contained
-
-          make
+          ./fetch-emacs-from-ftp -v ftp://ftp.gnu.org/pub/gnu/emacs
+          ls *.bz2
+          ./build-emacs-from-tar -v -j 8 emacs-27.1.tar.bz2 release
+          ./combine-and-package -v Emacs-27.1-10.12-x86_64.tar.bz2
